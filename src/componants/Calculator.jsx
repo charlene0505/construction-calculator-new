@@ -45,6 +45,9 @@ export default function Calculator() {
               value={calc.propertyType}
               onChange={(e) => calc.setPropertyType(e.target.value)}
             >
+              <option value="" disabled hidden>
+                Select...
+              </option>
               {PROPERTY_TYPES.map((t) => (
                 <option key={t.value} value={t.value}>
                   {t.label}
@@ -58,6 +61,9 @@ export default function Calculator() {
               value={calc.state}
               onChange={(e) => calc.setState(e.target.value)}
             >
+              <option value="" disabled hidden>
+                Select...
+              </option>
               {STATES.map((t) => (
                 <option key={t.value} value={t.value}>
                   {t.label}
@@ -73,6 +79,9 @@ export default function Calculator() {
               value={calc.completionYear}
               onChange={(e) => calc.setCompletionYear(e.target.value)}
             >
+              <option value="" disabled hidden>
+                Select...
+              </option>
               {COMPLETION_YEARS.map((y) => (
                 <option key={y}>{y}</option>
               ))}
@@ -84,6 +93,9 @@ export default function Calculator() {
               value={calc.buildType}
               onChange={(e) => calc.setBuildType(e.target.value)}
             >
+              <option value="" disabled hidden>
+                Select...
+              </option>
               {BUILD_TYPES.map((b) => (
                 <option key={b}>{b}</option>
               ))}
@@ -99,6 +111,7 @@ export default function Calculator() {
                 type="number"
                 className="input pr-11"
                 value={calc.area}
+                placeholder="e.g. 220"
                 onChange={(e) => calc.setArea(e.target.value)}
               />
               <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[13px] text-ink-soft font-num">
@@ -111,6 +124,7 @@ export default function Calculator() {
               type="number"
               className="input"
               value={calc.beds}
+              placeholder=""
               onChange={(e) => calc.setBeds(e.target.value)}
             />
           </Field>
@@ -119,6 +133,7 @@ export default function Calculator() {
               type="number"
               className="input"
               value={calc.floors}
+              placeholder=""
               onChange={(e) => calc.setFloors(e.target.value)}
             />
           </Field>
@@ -130,6 +145,9 @@ export default function Calculator() {
               value={calc.wallType}
               onChange={(e) => calc.setWallType(e.target.value)}
             >
+              <option value="" disabled hidden>
+                Select...
+              </option>
               {WALL_TYPES.map((t) => (
                 <option key={t.value} value={t.value}>
                   {t.label}
@@ -162,80 +180,80 @@ export default function Calculator() {
         </p>
       </div>
 
-      {/* RESULT PANEL */}
-      <div className="bg-paper-raised border border-line rounded-brand p-7 md:sticky md:top-6">
+    {/* RESULT PANEL */}
+    <div
+    className={`bg-paper-raised border border-line rounded-brand p-7 md:sticky md:top-6 transition-opacity ${
+        calc.result.isComplete ? "" : "opacity-50 grayscale pointer-events-none"
+    }`}
+    >
+    {calc.result.isComplete ? (
+        <>
         <div className="font-num text-4xl font-bold tracking-tight text-highlight tabular-nums mb-1">
-          {fmt(calc.result.total)}
+            {fmt(calc.result.total)}
         </div>
         <div className="sm:text-md tracking-wide bg-highlight text-paper-raised sm:font-semibold text-xs font-normal px-1 py-1">
-          {calc.finishName} finish
+            {calc.finishName} finish
         </div>
         <div className="flex justify-between py-2 pt-4 px-1">
-          <div className="text-xs text-ink-soft font-normal">Low estimate</div>
-          <div className="text-xs text-ink-soft font-normal">
-            {fmt(calc.result.low)}
-          </div>
+            <div className="text-xs text-ink-soft font-normal">Low estimate</div>
+            <div className="text-xs text-ink-soft font-normal">{fmt(calc.result.low)}</div>
         </div>
         <div className="flex justify-between py-1 px-1 pb-5">
-          <div className="text-xs text-ink-soft font-normal">
-            High estimate{" "}
-          </div>
-          <div className="text-xs text-ink-soft font-normal">
-            {fmt(calc.result.high)}{" "}
-          </div>
+            <div className="text-xs text-ink-soft font-normal">High estimate </div>
+            <div className="text-xs text-ink-soft font-normal">{fmt(calc.result.high)} </div>
         </div>
 
         <div className="text-[13px] font-semibold text-ink border-t border-line pt-2">
-          What affects your estimate
+            What affects your estimate
         </div>
         <ul className="list-none m-0 p-0">
-          {[
+            {[
             "Property type sets a base allowance.",
             "Wall type adds to the base.",
             calc.activeFeatureLabels.length
-              ? `Selected options add to the base — currently: ${calc.activeFeatureLabels.join(", ")}.`
-              : "Selected options add to the base.",
+                ? `Selected options add to the base — currently: ${calc.activeFeatureLabels.join(", ")}.`
+                : "Selected options add to the base.",
             "Storeys and bedrooms apply small multipliers.",
             "Floor area scales the whole result.",
             "Location & year index adjusts for local build costs.",
-          ].map((line, i) => (
+            ].map((line, i) => (
             <li
-              key={i}
-              className="relative pl-4.5 py-2 text-[13.5px] text-ink-soft leading-relaxed border-b border-dotted border-line last:border-b-0"
+                key={i}
+                className="relative pl-4.5 py-2 text-[13.5px] text-ink-soft leading-relaxed border-b border-dotted border-line last:border-b-0"
             >
-              <span className="absolute left-0 top-2 text-emerald font-bold">
-                *
-              </span>
-              {line}
+                <span className="absolute left-0 top-2 text-emerald font-bold">*</span>
+                {line}
             </li>
-          ))}
+            ))}
         </ul>
 
         <p className="text-[12.5px] text-ink-soft py-3 border-t border-line">
-          Location &amp; year index applied:{" "}
-          <strong className="font-num tabular-nums text-ink font-semibold">
+            Location &amp; year index applied:{" "}
+            <strong className="font-num tabular-nums text-ink font-semibold">
             {calc.result.locationYearIndex.toFixed(3)}
-          </strong>{" "}
-          <span className="text-[#8B93A0]">
+            </strong>{" "}
+            <span className="text-[#8B93A0]">
             ({calc.state} · {calc.completionYear})
-          </span>
+            </span>
         </p>
 
         <p className="text-[11.5px] text-[#8B93A0] leading-relaxed py-4 border-t border-line">
-          **This estimate reflects the factors above at a high level and
-          excludes land cost, council fees and site-specific conditions. It is
-          indicative only and not a substitute for a quantity surveyor's
-          assessment.
+            **This estimate reflects the factors above at a high level and excludes land cost, council fees
+            and site-specific conditions. It is indicative only and not a substitute for a quantity surveyor's
+            assessment.
         </p>
         <div className="flex flex-col sm:flex-row justify-between border-t py-3 border-line">
-          <p className="text-md text-ink-soft leading-relaxed py-2 font-semibold">
-            Want to learn more?
-          </p>
-          <button className="bg-highlight border border-white/30 text-paper px-4 py-2 rounded-brand text-[13px] font-bold shrink-0 whitespace-nowrap">
+            <p className="text-md text-ink-soft leading-relaxed py-2 font-semibold">Want to learn more?</p>
+            <button className="bg-highlight border border-white/30 text-paper px-4 py-2 rounded-brand text-[13px] font-bold shrink-0 whitespace-nowrap">
             Speak to a specialist
-          </button>
+            </button>
         </div>
-      </div>
+        </>
+    ) : (
+        <div className="py-16 text-center text-sm text-ink-soft">
+        Fill in the details on the left to see your estimate.
+        </div>
+    )}
     </div>
-  );
-}
+    </div>
+)}

@@ -3,9 +3,14 @@ export default function TriToggle({ options, value, onChange }) {
     <>
       <select
         className="input sm:hidden"
-        value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
+        value={value === null ? "" : value}
+        onChange={(e) =>
+          onChange(e.target.value === "" ? null : Number(e.target.value))
+        }
       >
+        <option value="" disabled hidden>
+          Select...
+        </option>
         {options.map((opt, i) => (
           <option key={opt} value={i}>
             {opt}

@@ -41,14 +41,14 @@ function storeysOffset(floors) {
 }
 
 export function useCalculator() {
-  const [propertyType, setPropertyType] = useState("house");
-  const [state, setState] = useState("NSW");
-  const [completionYear, setCompletionYear] = useState("2026");
-  const [buildType, setBuildType] = useState("New build"); // not used by the cost formula
-  const [wallType, setWallType] = useState("brick_veneer");
-  const [area, setArea] = useState(220);
-  const [beds, setBeds] = useState(4);
-  const [floors, setFloors] = useState(2);
+  const [propertyType, setPropertyType] = useState("");
+  const [state, setState] = useState("");
+  const [completionYear, setCompletionYear] = useState("");
+  const [buildType, setBuildType] = useState(""); // not used by the cost formula
+  const [wallType, setWallType] = useState("");
+  const [area, setArea] = useState("");
+  const [beds, setBeds] = useState("");
+  const [floors, setFloors] = useState("");
 
   const [features, setFeatures] = useState(() =>
     Object.fromEntries(FEATURES.map((f) => [f.key, false])),
@@ -56,9 +56,29 @@ export function useCalculator() {
   const toggleFeature = (key, value) =>
     setFeatures((prev) => ({ ...prev, [key]: value }));
 
-  const [finishLevel, setFinishLevel] = useState(1); // 0=Low, 1=Medium, 2=High
+  const [finishLevel, setFinishLevel] = useState(null); // null = not chosen yet
 
   const result = useMemo(() => {
+    const isComplete =
+      propertyType !== "" &&
+      state !== "" &&
+      completionYear !== "" &&
+      wallType !== "" &&
+      area !== "" &&
+      beds !== "" &&
+      floors !== "" &&
+      finishLevel !== null;
+
+    if (!isComplete) {
+      return {
+        total: null,
+        low: null,
+        high: null,
+        locationYearIndex: null,
+        isComplete: false,
+      };
+    }
+
     const safeArea = Math.max(0, Number(area) || 0);
     const propBase = PROPERTY_BASE_RATE[propertyType] || 0;
     const wallPts = WALL_POINTS[wallType] || 0;
@@ -83,6 +103,7 @@ export function useCalculator() {
       low: band[0],
       high: band[band.length - 1],
       locationYearIndex,
+      isComplete: true,
     };
   }, [
     propertyType,
@@ -123,7 +144,7 @@ export function useCalculator() {
     activeFeatureLabels,
     finishLevel,
     setFinishLevel,
-    finishName: FINISH_NAMES[finishLevel],
+    finishName: finishLevel !== null ? FINISH_NAMES[finishLevel] : "",
     result,
   };
 }
