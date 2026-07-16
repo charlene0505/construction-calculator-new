@@ -127,9 +127,9 @@ export const BCI = {
 };
 
 export const FEATURES = [
-  { key: "hvac", fieldLabel: "Has ducted air-conditioning" },
+  { key: "aircon", fieldLabel: "Has ducted air-conditioning" },
 ];
-export const FEATURE_POINTS = { hvac: 255 };
+export const FEATURE_POINTS = { aircon: 255 };
 
 export const FINISH_NAMES = ["Economy", "Standard", "Premium", "Luxury"];
 export const FINISH_MULTIPLIERS = [0.91, 1.0, 1.09, 1.18];

@@ -23,7 +23,7 @@ function StepLabel({ children }) {
 function Field({ label, children }) {
   return (
     <label className="flex flex-col gap-1.5">
-      <span className="text-[13px] text-ink-soft font-medium">{label}</span>
+      <span className="text-[13px] text-ink-soft font-semibold">{label}</span>
       {children}
     </label>
   );
@@ -34,7 +34,7 @@ export default function Calculator() {
   const fmt = (n) => "$" + Math.round(n).toLocaleString("en-AU");
 
   return (
-    <div className="max-w-[1180px] mx-auto pb-15 sm:pb-30 px-5 sm:px-10 grid grid-cols-1 md:grid-cols-[1.15fr_0.85fr] gap-7 items-start">
+    <div className="max-w-full mx-auto pb-15 sm:pb-30 px-5 sm:px-10 grid grid-cols-1 md:grid-cols-[1.15fr_0.85fr] gap-7 items-start">
       {/* INPUT PANEL */}
       <div className="bg-paper-raised border border-line rounded-brand p-8">
         <StepLabel>Property details</StepLabel>
@@ -221,18 +221,18 @@ export default function Calculator() {
           </span>
         </p>
 
-        <p className="text-[11.5px] text-ink-soft leading-relaxed py-4 border-t border-line">
+        <p className="text-[11.5px] text-[#8B93A0] leading-relaxed py-4 border-t border-line">
           **This estimate reflects the factors above at a high level and
           excludes land cost, council fees and site-specific conditions. It is
           indicative only and not a substitute for a quantity surveyor's
           assessment.
         </p>
         <div className="flex flex-col sm:flex-row justify-between border-t py-3 border-line">
-          <p className="text-md text-ink-soft leading-relaxed py-2">
+          <p className="text-md text-ink-soft leading-relaxed py-2 font-semibold">
             Want to learn more?
           </p>
           <button className="bg-highlight border border-white/30 text-paper px-4 py-2 rounded-brand text-[13px] font-bold shrink-0 whitespace-nowrap">
-            Speak to a lender
+            Speak to a specialist
           </button>
         </div>
       </div>

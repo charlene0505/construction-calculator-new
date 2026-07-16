@@ -1,7 +1,7 @@
 export default function FeatureToggle({ label, checked, onChange }) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-3 border-b border-dotted border-line last:border-b-0 w-full">
-      <label className="text-sm text-ink font-medium">{label}</label>
+      <label className="text-sm text-ink-soft font-semibold">{label}</label>
       <div className="flex border border-line rounded overflow-hidden w-full sm:w-64">
         <button
           type="button"
