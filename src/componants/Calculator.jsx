@@ -34,7 +34,7 @@ export default function Calculator() {
   const fmt = (n) => "$" + Math.round(n).toLocaleString("en-AU");
 
   return (
-    <div className="max-w-[1180px] mx-auto pb-30 px-5 sm:px-10 grid grid-cols-1 md:grid-cols-[1.15fr_0.85fr] gap-7 items-start">
+    <div className="max-w-[1180px] mx-auto pb-15 sm:pb-30 px-5 sm:px-10 grid grid-cols-1 md:grid-cols-[1.15fr_0.85fr] gap-7 items-start">
       {/* INPUT PANEL */}
       <div className="bg-paper-raised border border-line rounded-brand p-8">
         <StepLabel>Property details</StepLabel>
@@ -91,7 +91,7 @@ export default function Calculator() {
           </Field>
         </div>
 
-        <StepLabel>Size &amp; layout</StepLabel>
+        <StepLabel>Size &amp; features</StepLabel>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
           <Field label="Floor area">
             <div className="relative">
@@ -164,18 +164,28 @@ export default function Calculator() {
 
       {/* RESULT PANEL */}
       <div className="bg-paper-raised border border-line rounded-brand p-7 md:sticky md:top-6">
-        <div className="sm:text-md tracking-wide bg-highlight text-white sm:font-semibold text-xs font-normal px-2">
-          Estimated construction cost - {calc.finishName} finish
-        </div>
         <div className="font-num text-4xl font-bold tracking-tight text-highlight tabular-nums mb-1">
           {fmt(calc.result.total)}
         </div>
-        <div className="text-xs text-ink-soft mb-6 font-semibold">
-          Low estimate {fmt(calc.result.low)} &nbsp;·&nbsp; High estimate{" "}
-          {fmt(calc.result.high)}
+        <div className="sm:text-md tracking-wide bg-highlight text-paper-raised sm:font-semibold text-xs font-normal px-1 py-1">
+          {calc.finishName} finish
+        </div>
+        <div className="flex justify-between py-2 pt-4 px-1">
+          <div className="text-xs text-ink-soft font-normal">Low estimate</div>
+          <div className="text-xs text-ink-soft font-normal">
+            {fmt(calc.result.low)}
+          </div>
+        </div>
+        <div className="flex justify-between py-1 px-1 pb-5">
+          <div className="text-xs text-ink-soft font-normal">
+            High estimate{" "}
+          </div>
+          <div className="text-xs text-ink-soft font-normal">
+            {fmt(calc.result.high)}{" "}
+          </div>
         </div>
 
-        <div className="text-[13px] font-semibold text-ink border-t border-line pt-4.5 mb-3">
+        <div className="text-[13px] font-semibold text-ink border-t border-line pt-2">
           What affects your estimate
         </div>
         <ul className="list-none m-0 p-0">
@@ -201,7 +211,7 @@ export default function Calculator() {
           ))}
         </ul>
 
-        <p className="text-[12.5px] text-ink-soft mt-3.5 pt-3 border-t border-line">
+        <p className="text-[12.5px] text-ink-soft py-3 border-t border-line">
           Location &amp; year index applied:{" "}
           <strong className="font-num tabular-nums text-ink font-semibold">
             {calc.result.locationYearIndex.toFixed(3)}
@@ -211,12 +221,20 @@ export default function Calculator() {
           </span>
         </p>
 
-        <p className="text-[11.5px] text-ink-soft leading-relaxed mt-5 pt-4 border-t border-line">
+        <p className="text-[11.5px] text-ink-soft leading-relaxed py-4 border-t border-line">
           **This estimate reflects the factors above at a high level and
           excludes land cost, council fees and site-specific conditions. It is
           indicative only and not a substitute for a quantity surveyor's
           assessment.
         </p>
+        <div className="flex flex-col sm:flex-row justify-between border-t py-3 border-line">
+          <p className="text-md text-ink-soft leading-relaxed py-2">
+            Want to learn more?
+          </p>
+          <button className="bg-highlight border border-white/30 text-paper px-4 py-2 rounded-brand text-[13px] font-bold shrink-0 whitespace-nowrap">
+            Speak to a lender
+          </button>
+        </div>
       </div>
     </div>
   );
