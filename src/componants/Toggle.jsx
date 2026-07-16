@@ -1,13 +1,13 @@
 export default function FeatureToggle({ label, checked, onChange }) {
   return (
-    <div className="flex items-center justify-between gap-3 py-3 border-b border-dotted border-line last:border-b-0">
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-3 border-b border-dotted border-line last:border-b-0 w-full">
       <label className="text-sm text-ink font-medium">{label}</label>
-      <div className="flex border border-line rounded overflow-hidden">
+      <div className="flex border border-line rounded overflow-hidden w-full sm:w-64">
         <button
           type="button"
           onClick={() => onChange(false)}
-          className={`px-4.5 py-2 text-sm font-semibold border-r border-line ${
-            !checked ? "bg-paper text-ink" : "bg-paper-raised text-ink-soft"
+          className={`flex-1 py-2.5 px-3 text-sm font-semibold text-center border-r border-line ${
+            !checked ? "bg-ink text-white" : "bg-paper-raised text-ink-soft"
           }`}
         >
           No
@@ -15,7 +15,7 @@ export default function FeatureToggle({ label, checked, onChange }) {
         <button
           type="button"
           onClick={() => onChange(true)}
-          className={`px-4.5 py-2 text-sm font-semibold ${
+          className={`flex-1 py-2.5 px-3 text-sm font-semibold text-center ${
             checked ? "bg-ink text-white" : "bg-paper-raised text-ink-soft"
           }`}
         >
